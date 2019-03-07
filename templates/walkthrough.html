@@ -1,0 +1,142 @@
+<style>
+
+.serif {
+  font-family: Georgia, sans-serif, monospace;
+}
+
+.center_vert {
+  margin: 0;
+  position: absolute;
+  top: 5%;
+  left: 5%;
+  line-height:1.6;
+}
+
+.dropdown {
+  width:150px;
+  height:200px
+}
+
+th, td {
+  padding: 8px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+input[type=submit] {
+  background-color: #ce661c;
+  border: none;
+  color: white;
+  padding: 8px 16px;
+  text-decoration: none;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+input[type=submit]:hover {
+  background-color: #778899;
+  color: white;
+  border-radius: 5px;
+}
+
+p.columns {
+  -webkit-column-count: 5; /* Chrome, Safari, Opera */
+  -moz-column-count: 5; /* Firefox */
+  column-count: 5;
+
+  -webkit-column-gap: 1px; /* Chrome, Safari, Opera */
+  -moz-column-gap: 1px; /* Firefox */
+  column-gap: 1px;
+}
+
+img.two {
+  height: 75%;
+  width: 75%;
+}
+
+</style>
+
+<head>
+  <script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML" > </script>
+  <meta charset="UTF-8">
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
+</head>
+
+<body>
+<div class = "center_vert serif" style="overflow:auto">
+  <h1 align="center">Getting Started</h1>
+  <br>
+  <br>
+  <p style="font-size:20px">
+  First we start with a universe consisting of the DOW 30 stocks. We find their linear returns from the 2016/01/01 to 2019/03/01.
+  This is the list of company tickers we use:</p>
+  <br>
+  <br>
+  <p style="font-size:13px" class = "columns">
+  {% for result in session['tickers'] %}
+
+    {{ result }}<br/>
+
+ {% endfor %}</p>
+ <br>
+ <br>
+ <h2>The Covariance Matrix</h2>
+ <p style="font-size:20px">
+In order to find the covariance matrix, \(\Sigma\), we must first clean our data.
+We standardise the linear returns of the stock data using: \[z(x) = \frac{x - \mu}{\sigma}\]
+In applications such as finance, the correlation matrix is often used instead of the covariance matrix. By standardising the data first,
+eigendecomposition will produce and identical matrix to the correlation martix.
+Most machine-learning models, including sk.learn's PCA model, are optmimzed to work on standardized data.
+We can then plot these returns as below to check everything looks in order:
+ <div class="chart" id="scatter">
+     <script>
+         var graphs = {{plot1 | safe}};
+         Plotly.plot('scatter',graphs,{});
+     </script>
+ </div>
+ <br>
+ <br>
+ <p style="font-size:20px" class="serif">
+ Now we have cleaned and inspected our dataset (and we are happy with the results), it is time to split our data into
+ a training and testing set. We can calcualte the covariacne of the stocks in our porfolio using, \[cov_{x,y}=\frac{\sum_{i=1}^{N}(x_{i}-\bar{x})(y_{i}-\bar{y})}{N-1}\]
+ This is what the Correlation matrix looks like for our training set:
+ <br>
+ <br>
+ <img class="two" src = "static/corr_matrix.png">
+ <br>
+ <br>
+ <p style="font-size:20px" class="serif">
+  Interestingly, the most correlated stocks in our database were J.P. Morgan and Goldman Sachs. I have plotted their returns below:
+<br>
+<br>
+<div class="chart" id="scatter2">
+    <script>
+        var graphs = {{plot3 | safe}};
+        Plotly.plot('scatter2',graphs,{});
+    </script>
+</div>
+ <h2>Running the sklearn PCA model</h2>
+ <p style="font-size:20px" class="serif">
+   With our data split into a testing set and a training set and having created our covariance matrix, we can begin the PCA.
+  Our threshold variance is 95%, we are interested in how many PCAs can explain 95% of the data's variation. Our PCA model shows that 19
+  Principle Components account for 95% of the variation. This is already a significant improvement on the 28 PCAs we would need to
+  explain 100% of the variation.
+  <br>
+  If we lower our threshold variance to 75%, then only 8 PCAs are needed to explain the variation with the data.
+  <br>
+  <br>
+  <div class="chart" id="bar">
+      <script>
+          var graphs = {{plot2 | safe}};
+          Plotly.plot('bar',graphs,{});
+      </script>
+  </div>
+  <script type="text/javascript">
+if (window.MathJax) {
+  MathJax.Hub.Queue(
+    ["Typeset",MathJax.Hub]
+  );
+}
+</script>

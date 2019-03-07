@@ -1,0 +1,71 @@
+<style>
+
+.serif {
+  font-family: Georgia, sans-serif, monospace;
+}
+
+.center_vert {
+  margin: 0;
+  position: absolute;
+  top: 5%;
+  left: 5%;
+  line-height:1.6;
+}
+
+.dropdown {
+  width:150px;
+  height:200px
+}
+
+th, td {
+  padding: 8px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+input[type=submit] {
+  background-color: #ce661c;
+  border: none;
+  color: white;
+  padding: 8px 16px;
+  text-decoration: none;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+input[type=submit]:hover {
+  background-color: #778899;
+  color: white;
+  border-radius: 5px;
+}
+
+</style>
+<head>
+  <script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML" async> </script>
+</head>
+
+<body>
+<div class="center_vert serif"
+  <p style="font-size:20px"><h1 align="center">PCA for financial analysis</h1>
+    <br>
+    <h3>Introduction</h3>
+    Pricipal component analysis is a statistical technique for dimesnion reduction of a dataset.
+    The aim is to find 'Principal Components' (combinations of the vairables in the dataset) and rank them according to importance.
+    <br>
+    This can be an incredibly helpful technique:
+    <ul style="list-style-type:disc;">
+      <li> Most algorithims will run significnatly faster will fewer dimensions. </li>
+      <li> Dataset become simpler and therefore easier to interpret. </li>
+      <li> Plotting the data becomes more simple. </li>
+    </ul>
+    <h3>How it works</h3>
+    We perform eigendecomposition of the covariance matrix, \(\Sigma\). It is important to note that \(\Sigma\) will always be Orthoganal.
+    </body>
+    <br>
+    <br>
+    <form class="" action="/walkthrough" method = get>
+      <input type="submit" name="get_started" value="Get Started">
+    </form>
+    
